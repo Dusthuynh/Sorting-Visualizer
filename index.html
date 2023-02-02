@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="./img/sort_logo.png" />
+    <link rel="stylesheet" href="style.css" />
+    <title>NLCS</title>
+  </head>
+  <body>
+    <header>
+      <img src="./img/sort_logo.png" class="logo_icon" alt="logo" />
+      <h2>MÔ PHỎNG CÁC GIẢI THUẬT SẮP XẾP VỚI DÃY SỐ CHO TRƯỚC</h2>
+      <div class="info_btn btn">Thông tin</div>
+    </header>
+
+    <div class="container">
+      <div class="control_container">
+        <div class="create_array">
+          <div class="header_control">
+            <p class="header_text">Tạo dãy số</p>
+            <div class="random_btn btn">Random</div>
+          </div>
+          <div class="input">
+            <textarea
+              id="input_array"
+              placeholder="Nhập dãy chỉ gồm số và dấu phẩy, không thừa dấu phẩy, và chỉ nên có 40 số"
+            ></textarea>
+          </div>
+
+          <div class="command_container">
+            <div class="btn" id="create_array_btn">Tạo</div>
+            <div class="btn" id="remove_array_btn">Xóa</div>
+          </div>
+        </div>
+
+        <div class="algorithm_box box">
+          <div class="header_text">Chọn giải thuật</div>
+          <select name="algorithm minimal" id="algorithm_select">
+            <option value="bubble">Bubble Sort</option>
+            <option value="insetion">Insertion Sort</option>
+            <option value="merge">Merge Sort</option>
+            <option value="quick">Quick Sort</option>
+            <option value="quickB">Quick Sort biến thể</option>
+            <option value="heap">Heap Sort</option>
+          </select>
+        </div>
+
+        <div class="direction_box box">
+          <div class="header_text">Sắp xếp theo chiều</div>
+          <select name="direction minimal" id="direction_select">
+            <option value="increase">Tăng dần</option>
+            <option value="decrease">Giảm dần</option>
+          </select>
+        </div>
+
+        <div class="speed_container">
+          <input
+            type="range"
+            min="10"
+            max="100"
+            value="50"
+            name="speed"
+            step="10"
+            id="speedVolume"
+          />
+          <span class="title_speed">0.5x</span>
+        </div>
+
+        <div class="command_container box">
+          <div disabled class="run_btn btn">Bắt đầu</div>
+        </div>
+      </div>
+
+      <div class="view_container">
+        <div id="bars_container"></div>
+
+        <div class="detail_container">
+          <div class="description_box">Mô tả bài toán từng bước</div>
+          <div class="pseudo_code_box">
+            Code giả
+            <span id="pseudo_code"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
