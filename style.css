@@ -187,6 +187,7 @@ header {
 }
 
 .bar {
+  top: 0;
   width: 40px;
   height: 40px;
   margin-right: 1px;
@@ -196,6 +197,7 @@ header {
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  transition: transform ease 1s;
 }
 
 .detail_container {
@@ -222,4 +224,43 @@ header {
 .pseudo_code_box {
   background-color: #1ab594;
   width: 59%;
+}
+
+/* information */
+.infor-container {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  padding-top: 8%;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.infor_card {
+  width: 40%;
+  height: 40%;
+  padding: 30px;
+  background-color: aliceblue;
+  border-radius: 10px;
+}
+
+.close {
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  cursor: pointer;
+  position: absolute;
+  right: 30%;
+  padding: 9px 12px;
+  background-color: rgb(216, 123, 123);
+}
+
+.close:hover {
+  background-color: rgb(231, 19, 19);
+}
+
+.none {
+  display: none;
 }

@@ -38,12 +38,12 @@
         <div class="algorithm_box box">
           <div class="header_text">Chọn giải thuật</div>
           <select name="algorithm minimal" id="algorithm_select">
+            <option value="selection">Selection Sort</option>
+            <option value="insertion">Insertion Sort</option>
             <option value="bubble">Bubble Sort</option>
-            <option value="insetion">Insertion Sort</option>
-            <option value="merge">Merge Sort</option>
             <option value="quick">Quick Sort</option>
-            <option value="quickB">Quick Sort biến thể</option>
-            <option value="heap">Heap Sort</option>
+            <option value="quickBT">Quick Sort biến thể</option>
+            <option value="merge">Heap Sort</option>
           </select>
         </div>
 
@@ -56,16 +56,15 @@
         </div>
 
         <div class="speed_container">
+          <div class="header_text">Tốc độ</div>
           <input
+            id="speed_input"
             type="range"
-            min="10"
-            max="100"
-            value="50"
-            name="speed"
-            step="10"
-            id="speedVolume"
+            min="20"
+            max="400"
+            value="60"
+            stepDown="10"
           />
-          <span class="title_speed">0.5x</span>
         </div>
 
         <div class="command_container box">
@@ -85,6 +84,20 @@
         </div>
       </div>
     </div>
-    <script src="index.js"></script>
+
+    <div class="infor-container none">
+      <div class="infor_card">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis quas
+        iusto assumenda suscipit ea ipsum doloribus iure odio, dolorum aliquam
+        sequi aspernatur placeat quo tenetur sed aperiam praesentium cumque
+        molestias!
+      </div>
+      <span class="close">x</span>
+    </div>
+    <script src="sorting.js"></script>
+    <script src="algorithm sort/bubble.js"></script>
+    <script src="algorithm sort/insertion.js"></script>
+    <script src="algorithm sort/selection.js"></script>
+    <script src="algorithm sort/quick.js"></script>
   </body>
 </html>
