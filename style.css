@@ -200,6 +200,10 @@ header {
   transition: transform ease 1s;
 }
 
+.underlined {
+  border-bottom: 5px solid red;
+}
+
 .detail_container {
   height: 35vh;
   padding: 20px;

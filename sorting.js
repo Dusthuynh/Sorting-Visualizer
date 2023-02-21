@@ -3,8 +3,9 @@ let array = [];
 let bar_color = "#add8e6";
 let scanBar_color = "#85A1F2";
 let selectBar_color = "#E6A595";
+let selectBar1_color = "#e3b375";
 let doneBar_color = "#99746B";
-let delay = 2000; // delay default for sleep func (260ms)
+let delay = 460; // delay default for sleep func (260ms)
 let max_height_bar = () => {
   let max = Number.NEGATIVE_INFINITY;
   for (let i = 0; i < array.length; i++) {
@@ -13,6 +14,7 @@ let max_height_bar = () => {
 
   return max;
 };
+
 // **
 
 // ** Buttons **
@@ -108,6 +110,12 @@ run_btn.addEventListener("click", async function () {
       break;
     case "quick":
       await preQuickSort();
+      break;
+    case "merge":
+      await preMergeSort();
+      break;
+    case "heap":
+      await preHeapSort();
       break;
     default:
       await selectionSort();
