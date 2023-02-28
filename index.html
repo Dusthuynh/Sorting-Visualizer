@@ -76,10 +76,24 @@
         <div id="bars_container"></div>
 
         <div class="detail_container">
-          <div class="description_box">Mô tả bài toán từng bước</div>
-          <div class="pseudo_code_box">
-            Code giả
-            <span id="pseudo_code"></span>
+          <div class="description_box">
+            <p>Mô tả bài toán từng bước</p>
+          </div>
+
+          <div class="similar_code_box">
+            <p>Code tương ứng (A = array)</p>
+            <div id="similar_code">
+              <pre><code><div id="selection_code">
+  <span>for i = 0 to length(A) - 1 do</span>
+    <span>min_index = i</span>
+    <span>for j = i + 1 to array.length do</span>
+      <span>if compare(A[min_index], A[j])</span>
+        <span>min_index = j</span>
+    <span>end for j</span>
+    <span>swap (min_index, i)</span>
+  <span>end for i</span>
+  </div></code></pre>
+            </div>
           </div>
         </div>
       </div>

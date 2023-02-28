@@ -34,3 +34,23 @@ async function insertionSort() {
 //        end while
 //    end for
 // end procedure
+
+function addSimilarCodeInsertionSort() {
+  description_box.style.width = "39%";
+  similar_code_box.style.width = "60%";
+
+  let similar_code = document.getElementById("similar_code");
+  similar_code.innerHTML = "";
+
+  let code = document.createRange().createContextualFragment(`<pre><code><div>
+  <span>for i = 1 to length(A) - 1 do</span>
+      <span>j = i</span>
+      <span>while j > 0 and compare(A[j - 1], A[j]) do</span>
+        <span>swap(A[j], A[j-1])</span>
+        <span>j = j - 1</span>
+      <span>end while</span>
+    <span>end for</span>
+    </div></code></pre>`);
+
+  similar_code.appendChild(code);
+}

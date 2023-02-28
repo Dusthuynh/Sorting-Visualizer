@@ -66,3 +66,36 @@ async function preQuickSort() {
   // console.log(array);
   toggleCreateArrayBtns("select");
 }
+
+function addSimilarCodeQuickSort() {
+  description_box.style.width = "39%";
+  similar_code_box.style.width = "60%";
+
+  let similar_code = document.getElementById("similar_code");
+  similar_code.innerHTML = "";
+
+  let code = document.createRange().createContextualFragment(`<pre>
+  <code>
+  <div><span>quickSort(A[], low, high)</span>
+    <span>if (low < high)</span> 
+      <span>pi = partition(A, low, high)</span>
+      <span>quickSort(A, low, pi – 1)</span>
+      <span>quickSort(A, pi + 1, high)</span>
+  </div>
+
+  <div><span>partition (A[], low, high)</span>
+    <span>pivot = A[high]</span>
+    <span>i = (low – 1)</span>
+    <span>for (j = low; j <= high- 1; j++)</span>
+        <span>if (A[j] < pivot)</span>
+            <span>i++</span>
+            <span>swap A[i] and A[j]</span>
+    <span>end for i</span>
+    <span>swap A[i + 1] and A[high]</span>
+    <span>return (i + 1)</span>
+  </div>
+  </code>
+</pre>`);
+
+  similar_code.appendChild(code);
+}

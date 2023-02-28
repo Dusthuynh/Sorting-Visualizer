@@ -5,7 +5,7 @@ let scanBar_color = "#85A1F2";
 let selectBar_color = "#E6A595";
 let selectBar1_color = "#e3b375";
 let doneBar_color = "#99746B";
-let delay = 460; // delay default for sleep func (260ms)
+let delay = 560; // delay default for sleep func (260ms)
 let max_height_bar = () => {
   let max = Number.NEGATIVE_INFINITY;
   for (let i = 0; i < array.length; i++) {
@@ -23,6 +23,13 @@ let create_array_btn = document.getElementById("create_array_btn");
 let remove_array_btn = document.getElementById("remove_array_btn");
 let run_btn = document.getElementsByClassName("run_btn")[0];
 // **
+
+// DOM detail code
+let description_box = document.getElementsByClassName("description_box")[0];
+let similar_code_box = document.getElementsByClassName("similar_code_box")[0];
+
+// DOM bars
+let bars = document.getElementsByClassName("bar");
 
 // Toggle create array btns
 function toggleCreateArrayBtns(stt) {
@@ -115,10 +122,53 @@ run_btn.addEventListener("click", async function () {
       await preMergeSort();
       break;
     case "heap":
-      await preHeapSort();
+      await heapSort();
       break;
     default:
       await selectionSort();
+  }
+});
+
+// Event direction
+let direction_select = document.getElementById("direction_select");
+algorithm_select.addEventListener("click", function (event) {
+  event.preventDefault();
+
+  if (algorithm_select.value === "heap") {
+    console.log("thoa");
+    direction_select.remove(1);
+  } else {
+    if (direction_select.childElementCount == 1) {
+      let option = document.createElement("option");
+      option.text = "Giảm dần";
+      option.setAttribute("value", "decrease");
+      direction_select.add(option);
+    }
+  }
+});
+
+algorithm_select.addEventListener("click", function (event) {
+  switch (algorithm_select.value) {
+    case "selection":
+      addSimilarCodeSelectionSort();
+      break;
+    case "insertion":
+      addSimilarCodeInsertionSort();
+      break;
+    case "bubble":
+      addSimilarCodeBubbleSort();
+      break;
+    case "quick":
+      addSimilarCodeQuickSort();
+      break;
+    case "merge":
+      addSimilarCodeMergeSort();
+      break;
+    case "heap":
+      addSimilarCodeHeapSort();
+      break;
+    default:
+      addSimilarCodeSelectionSort();
   }
 });
 
