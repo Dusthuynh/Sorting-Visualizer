@@ -77,16 +77,18 @@
 
         <div class="detail_container">
           <div class="description_box">
-            <p>Mô tả bài toán từng bước</p>
+            <p class="description_header">Mô tả bài toán từng bước</p>
+            <div id="description_text"></div>
           </div>
 
           <div class="similar_code_box">
             <p>Code tương ứng (A = array)</p>
             <div id="similar_code">
-              <pre><code><div id="selection_code">
-  <span>for i = 0 to length(A) - 1 do</span>
+              <pre><code><div id="code">
+  <span>n = length(A)</span>
+  <span>for i = 0 to (n - 1) do</span>
     <span>min_index = i</span>
-    <span>for j = i + 1 to array.length do</span>
+    <span>for j = i + 1 to (n - 1) do</span>
       <span>if compare(A[min_index], A[j])</span>
         <span>min_index = j</span>
     <span>end for j</span>
@@ -101,19 +103,25 @@
 
     <div class="infor-container none">
       <div class="infor_card">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis quas
-        iusto assumenda suscipit ea ipsum doloribus iure odio, dolorum aliquam
-        sequi aspernatur placeat quo tenetur sed aperiam praesentium cumque
-        molestias!
+        <p>
+          <strong>NIÊN LUẬN CƠ SỞ NGÀNH KTPM:</strong> MÔ PHỎNG GIẢI THUẬT SẮP
+          XẾP
+        </p>
+        <p><strong>SINH VIÊN THỰC HIỆN:</strong> HUỲNH MINH NGHĨA - B2012232</p>
+        <p>
+          <strong>GIẢNG VIÊN HƯỚNG DẪN:</strong> THS. TRƯƠNG THỊ THANH TUYỀN
+          -<br />
+          BỘ MÔN CÔNG NGHỆ PHẦN MỀM
+        </p>
       </div>
       <span class="close">x</span>
     </div>
     <script src="sorting.js"></script>
-    <script src="algorithm sort/bubble.js"></script>
-    <script src="algorithm sort/insertion.js"></script>
-    <script src="algorithm sort/selection.js"></script>
-    <script src="algorithm sort/quick.js"></script>
-    <script src="algorithm sort/heap.js"></script>
-    <script src="algorithm sort/merge.js"></script>
+    <script src="algorithm_sort/bubble.js"></script>
+    <script src="algorithm_sort/insertion.js"></script>
+    <script src="algorithm_sort/selection.js"></script>
+    <script src="algorithm_sort/quick.js"></script>
+    <script src="algorithm_sort/heap.js"></script>
+    <script src="algorithm_sort/merge.js"></script>
   </body>
 </html>

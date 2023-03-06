@@ -14,6 +14,10 @@
   font-family: "Courier New", Courier, monospace;
 }
 
+body {
+  overflow: hidden;
+}
+
 .btn {
   background-color: var(--white-color);
   display: flex;
@@ -222,7 +226,7 @@ header {
   border-radius: 20px;
 }
 
-.description_box p,
+.description_box .description_header,
 .similar_code_box p {
   font-weight: 600;
 }
@@ -230,6 +234,8 @@ header {
 .description_box {
   background-color: #2b3c4d;
   width: 39%;
+  overflow-y: scroll;
+  user-select: text;
 }
 
 .similar_code_box {
@@ -237,13 +243,13 @@ header {
   width: 60%;
 }
 
-code{
+code {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
 
-.hl-code{
+.hl-code {
   background-color: #777;
 }
 
@@ -262,7 +268,7 @@ code{
 
 .infor_card {
   width: 40%;
-  height: 40%;
+  height: 20%;
   padding: 30px;
   background-color: aliceblue;
   border-radius: 10px;

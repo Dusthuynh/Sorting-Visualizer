@@ -28,6 +28,10 @@ let run_btn = document.getElementsByClassName("run_btn")[0];
 let description_box = document.getElementsByClassName("description_box")[0];
 let similar_code_box = document.getElementsByClassName("similar_code_box")[0];
 
+// DOM algorithm
+let algorithm_select = document.getElementById("algorithm_select");
+let direction_select = document.getElementById("direction_select");
+
 // DOM bars
 let bars = document.getElementsByClassName("bar");
 
@@ -38,11 +42,15 @@ function toggleCreateArrayBtns(stt) {
     remove_array_btn.setAttribute("disabled", "");
     random_btn.setAttribute("disabled", "");
     run_btn.setAttribute("disabled", "");
+    algorithm_select.setAttribute("disabled", "");
+    direction_select.setAttribute("disabled", "");
   } else if (stt === "select") {
     create_array_btn.removeAttribute("disabled");
     remove_array_btn.removeAttribute("disabled");
     random_btn.removeAttribute("disabled");
     run_btn.removeAttribute("disabled");
+    algorithm_select.removeAttribute("disabled");
+    direction_select.removeAttribute("disabled");
   }
 }
 
@@ -99,12 +107,10 @@ speed_input.addEventListener("input", function runVolume(e) {
   delay = 420 - parseInt(speed_input.value);
 });
 
-// Selecting Algorithm Select from DOM
-let algorithm_select = document.getElementById("algorithm_select");
-
 // Event Run Sort
 run_btn.addEventListener("click", async function () {
   toggleCreateArrayBtns("unselect");
+  document.getElementById("description_text").innerHTML = "";
   switch (algorithm_select.value) {
     case "selection":
       await selectionSort();
@@ -130,7 +136,6 @@ run_btn.addEventListener("click", async function () {
 });
 
 // Event direction
-let direction_select = document.getElementById("direction_select");
 algorithm_select.addEventListener("click", function (event) {
   event.preventDefault();
 
@@ -172,18 +177,75 @@ algorithm_select.addEventListener("click", function (event) {
   }
 });
 
-// ** Cac Function chuc nang**
-
 // Ham so sanh s1 co lon/nho hon s2 khong
 // neu chieu la tang dan: lon hon
 // neu chieu la nho dan: nho hon
-function compare(s1, s2) {
+// function compare(s1, s2) {
+//   var res = false;
+//   let direction = direction_select.value;
+//   if (direction === "increase") {
+//     if (s1 > s2) res = true;
+//   } else if (direction === "decrease") {
+//     if (s1 < s2) res = true;
+//   }
+//   return res;
+// }
+
+// hàm to dam cac buoc trong giai thuat
+function rmHighLightLineCode(id) {
+  let selection_linesCode = document.getElementById(`${id}`).children;
+  for (let i = 0; i < selection_linesCode.length; i++) {
+    let el = selection_linesCode[i];
+    if (el.classList.contains("hl-code")) el.classList.remove("hl-code");
+  }
+}
+
+async function highLightLineCode(idx, id = "code") {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      let selection_linesCode = document.getElementById(`${id}`).children;
+      if (!selection_linesCode[idx].classList.contains("hl-code")) {
+        rmHighLightLineCode(id);
+        selection_linesCode[idx].classList.add("hl-code");
+
+        console.log(selection_linesCode[idx]);
+      }
+      resolve();
+    }, delay);
+  });
+}
+
+// ham them dong mo ta chi tiet thuat toan
+async function addDescription(text) {
+  return new Promise((resolve) => {
+    let line = document.createElement("p");
+    let description_text = document.getElementById("description_text");
+
+    line.innerText = text;
+    description_text.appendChild(line);
+
+    var elem = document.getElementsByClassName("description_box")[0];
+    elem.scrollTop = elem.scrollHeight;
+    resolve();
+  });
+}
+
+// ** Cac Function chuc nang**
+async function compare(s1, s2) {
   var res = false;
   let direction = direction_select.value;
   if (direction === "increase") {
-    if (s1 > s2) res = true;
+    await addDescription(`(Kiểm tra ${s1} > ${s2} ?`);
+    if (s1 > s2) {
+      res = true;
+      await addDescription("thỏa)");
+    } else await addDescription("không thỏa)");
   } else if (direction === "decrease") {
-    if (s1 < s2) res = true;
+    await addDescription(`(Nếu ${s1} < ${s2} ?`);
+    if (s1 < s2) {
+      res = true;
+      await addDescription("thỏa)");
+    } else await addDescription("không thỏa)");
   }
   return res;
 }
@@ -197,18 +259,20 @@ function sleep(milisec) {
   });
 }
 
-function swap(i1, i2) {
-  let bars = document.getElementsByClassName("bar");
+async function swap(i1, i2) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      let temp = array[i1];
+      array[i1] = array[i2];
+      array[i2] = temp;
 
-  // console.log("swap-ham", array[i1], array[i2]);
-  let temp = array[i1];
-  array[i1] = array[i2];
-  array[i2] = temp;
-
-  bars[i1].style.height = `${(array[i1] / max_height_bar()) * 100}%`;
-  bars[i1].innerText = array[i1];
-  bars[i2].style.height = `${(array[i2] / max_height_bar()) * 100}%`;
-  bars[i2].innerText = array[i2];
+      bars[i1].style.height = `${(array[i1] / max_height_bar()) * 100}%`;
+      bars[i1].innerText = array[i1];
+      bars[i2].style.height = `${(array[i2] / max_height_bar()) * 100}%`;
+      bars[i2].innerText = array[i2];
+      resolve("");
+    }, delay);
+  });
 }
 
 // Information control
