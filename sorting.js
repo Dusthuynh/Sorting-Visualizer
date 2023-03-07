@@ -208,7 +208,7 @@ async function highLightLineCode(idx, id = "code") {
         rmHighLightLineCode(id);
         selection_linesCode[idx].classList.add("hl-code");
 
-        console.log(selection_linesCode[idx]);
+        // console.log(selection_linesCode[idx]);
       }
       resolve();
     }, delay);
