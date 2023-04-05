@@ -20,7 +20,18 @@
         <div class="create_array">
           <div class="header_control">
             <p class="header_text">Tạo dãy số</p>
-            <div class="random_btn btn">Random</div>
+            <div class="header_btn">
+              <div class="random_btn btn">Random</div>
+              <input
+                type="file"
+                id="fileElem"
+                accept="text/*"
+                onchange="importFile()"
+                style="display: none"
+              />
+              <div class="import_btn btn">Import</div>
+            </div>
+            <div id="file_noti"></div>
           </div>
           <div class="input">
             <textarea

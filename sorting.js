@@ -19,6 +19,9 @@ let max_height_bar = () => {
 
 // ** Buttons **
 var random_btn = document.getElementsByClassName("random_btn")[0];
+let fileElem = document.getElementById("fileElem"),
+  import_btn = document.getElementsByClassName("import_btn")[0],
+  file_noti = document.getElementById("file_noti");
 let create_array_btn = document.getElementById("create_array_btn");
 let remove_array_btn = document.getElementById("remove_array_btn");
 let run_btn = document.getElementsByClassName("run_btn")[0];
@@ -41,6 +44,7 @@ function toggleCreateArrayBtns(stt) {
     create_array_btn.setAttribute("disabled", "");
     remove_array_btn.setAttribute("disabled", "");
     random_btn.setAttribute("disabled", "");
+    import_btn.setAttribute("disabled", "");
     run_btn.setAttribute("disabled", "");
     algorithm_select.setAttribute("disabled", "");
     direction_select.setAttribute("disabled", "");
@@ -48,6 +52,7 @@ function toggleCreateArrayBtns(stt) {
     create_array_btn.removeAttribute("disabled");
     remove_array_btn.removeAttribute("disabled");
     random_btn.removeAttribute("disabled");
+    import_btn.removeAttribute("disabled");
     run_btn.removeAttribute("disabled");
     algorithm_select.removeAttribute("disabled");
     direction_select.removeAttribute("disabled");
@@ -62,6 +67,34 @@ random_btn.addEventListener("click", function () {
   input_array.value =
     "13,39,26,22,34,32,47,26,45,30,25,50,79,42,77,84,19,62,47,53";
 });
+
+//Event import Array
+import_btn.addEventListener("click", function (e) {
+  if (fileElem) {
+    fileElem.click();
+  }
+  e.preventDefault();
+});
+
+function importFile() {
+  const [file] = document.querySelector("#fileElem").files;
+  const reader = new FileReader();
+
+  reader.addEventListener(
+    "load",
+    () => {
+      // console.log(reader.result);
+      input_array.value = reader.result;
+
+      fileElem.value = "";
+    },
+    false
+  );
+
+  if (file) {
+    reader.readAsText(file);
+  }
+}
 
 // Event listener to create Array
 create_array_btn.addEventListener("click", function () {
@@ -177,20 +210,6 @@ algorithm_select.addEventListener("click", function (event) {
   }
 });
 
-// Ham so sanh s1 co lon/nho hon s2 khong
-// neu chieu la tang dan: lon hon
-// neu chieu la nho dan: nho hon
-// function compare(s1, s2) {
-//   var res = false;
-//   let direction = direction_select.value;
-//   if (direction === "increase") {
-//     if (s1 > s2) res = true;
-//   } else if (direction === "decrease") {
-//     if (s1 < s2) res = true;
-//   }
-//   return res;
-// }
-
 // hàm to dam cac buoc trong giai thuat
 function rmHighLightLineCode(id) {
   let selection_linesCode = document.getElementById(`${id}`).children;
@@ -231,6 +250,9 @@ async function addDescription(text) {
 }
 
 // ** Cac Function chuc nang**
+// Ham so sanh s1 co lon/nho hon s2 khong
+// neu chieu la tang dan: lon hon
+// neu chieu la nho dan: nho hon
 async function compare(s1, s2) {
   var res = false;
   let direction = direction_select.value;
@@ -251,7 +273,6 @@ async function compare(s1, s2) {
 }
 
 function sleep(milisec) {
-  // console.log(milisec);
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve("");
