@@ -73,7 +73,7 @@ let randomIntArrayInRange = (min, max, n = 1) =>
 
 random_btn.addEventListener("click", function () {
   // input_array.value = "13,39,26,22,34";
-  input_array.value = randomIntArrayInRange(10, 90, 40);
+  input_array.value = randomIntArrayInRange(10, 90, 18);
 });
 
 //Event import Array
