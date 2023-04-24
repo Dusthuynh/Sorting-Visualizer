@@ -102,6 +102,7 @@ async function preQuickSort() {
   rmHighLightLineCode("code");
   rmHighLightLineCode("partC");
   toggleCreateArrayBtns("select");
+  showcompareAlgorithmsBtn("Quick Sort");
 }
 
 function addSimilarCodeQuickSort() {
@@ -137,30 +138,42 @@ function addSimilarCodeQuickSort() {
   similar_code.appendChild(code);
 }
 
-// async function partition(arr, low, high) {
-//   let pivot = arr[high];
-//   let i = low - 1;
-//   for (let j = low; j <= high - 1; j++) {
-//     if (await compare(pivot, arr[j])) {
-//       i++;
-//       await swap(i, j);
-//     }
-//   }
-//   i++;
-//   await swap(i, high);
-//   return i;
-// }
+// Test performance
+function partitionTest(arr, low, high, quick_performance) {
+  let pivot = arr[high];
+  let i = low - 1;
+  for (let j = low; j <= high - 1; j++) {
+    quick_performance.compare++;
+    if (compareTest(pivot, arr[j])) {
+      i++;
+      quick_performance.swap++;
+      swapTest(arr, i, j);
+    }
+  }
+  i++;
+  quick_performance.swap++;
+  swapTest(arr, i, high);
+  return i;
+}
 
-// async function quickSort(arr, low, high) {
-//   if (low < high) {
-//     let pivot_idx = await partition(arr, low, high);
-//     await quickSort(arr, low, pivot_idx - 1);
-//     await quickSort(arr, pivot_idx + 1, high);
-//   }
-// }
+function quickSortTest(arr, low, high, quick_performance) {
+  if (low < high) {
+    let pivot_idx = partitionTest(arr, low, high, quick_performance);
+    quickSortTest(arr, low, pivot_idx - 1, quick_performance);
+    quickSortTest(arr, pivot_idx + 1, high, quick_performance);
+  }
+}
 
-// async function preQuickSort() {
-//   let l = 0;
-//   let r = array.length - 1;
-//   await quickSort(array, l, r);
-// }
+function quickSortPerformance() {
+  let l = 0,
+    r = array.length - 1,
+    arr = [...arrayO],
+    quick_performance = {
+      compare: 0,
+      swap: 0,
+    };
+  quickSortTest(arr, l, r, quick_performance);
+
+  algorithm_performance.set("quick_swap", quick_performance.swap);
+  algorithm_performance.set("quick_compare", quick_performance.compare);
+}

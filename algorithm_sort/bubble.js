@@ -3,10 +3,10 @@ async function bubbleSort() {
   await highLightLineCode(0);
   await addDescription(`n = ${n}`);
 
-  for (let i = 0; i < array.length - 1; i++) {
+  for (let i = 0; i < n - 1; i++) {
     await highLightLineCode(1);
     await addDescription(`i = ${i}`);
-    for (let j = 0; j < array.length - i - 1; j++) {
+    for (let j = 0; j < n - i - 1; j++) {
       await highLightLineCode(2);
       await addDescription(`j = ${j}`);
       bars[j].style.background = scanBar_color;
@@ -30,7 +30,7 @@ async function bubbleSort() {
       bars[j].style.background = bar_color;
       bars[j + 1].style.background = bar_color;
     }
-    bars[array.length - i - 1].style.background = doneBar_color;
+    bars[n - i - 1].style.background = doneBar_color;
   }
   await highLightLineCode(6);
   await addDescription("Kết thúc vòng for i");
@@ -39,6 +39,7 @@ async function bubbleSort() {
 
   bars[0].style.background = doneBar_color;
   toggleCreateArrayBtns("select");
+  showcompareAlgorithmsBtn("Bubble Sort");
 }
 
 function addSimilarCodeBubbleSort() {
@@ -62,9 +63,22 @@ function addSimilarCodeBubbleSort() {
   similar_code.appendChild(code);
 }
 
-// async function bubbleSort() {
-//   let n = array.length;
-//   for (let i = 0; i < array.length - 1; i++)
-//     for (let j = 0; j < array.length - i - 1; j++)
-//       if (await compare(array[j], array[j + 1])) await swap(j, j + 1);
-// }
+function bubbleSortPerformance() {
+  let arr = [...arrayO],
+    n = arr.length,
+    numOfCompare = 0,
+    numOfSwap = 0;
+
+  for (let i = 0; i < n - 1; i++) {
+    for (let j = 0; j < n - i - 1; j++) {
+      numOfCompare++;
+      if (compareTest(arr[j], arr[j + 1])) {
+        numOfSwap++;
+        swapTest(arr, j, j + 1);
+      }
+    }
+  }
+
+  algorithm_performance.set("bubble_swap", numOfSwap);
+  algorithm_performance.set("bubble_compare", numOfCompare);
+}

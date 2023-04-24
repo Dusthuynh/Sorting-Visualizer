@@ -114,11 +114,12 @@ async function heapSort() {
   }
 
   bars[0].style.background = doneBar_color;
-  toggleCreateArrayBtns("select");
   rmHighLightLineCode("code");
   rmHighLightLineCode("heapifyC");
   await addDescription("DONE SORT!!!");
   await addDescription("---");
+  toggleCreateArrayBtns("select");
+  showcompareAlgorithmsBtn("Heap Sort");
 }
 
 function addSimilarCodeHeapSort() {
@@ -153,4 +154,46 @@ function addSimilarCodeHeapSort() {
   </div></code></pre>`);
 
   similar_code.appendChild(code);
+}
+
+//Test Performance
+function heapifyTest(arr, n, i, heap_performance) {
+  var largest_idx = i;
+  var l = 2 * i + 1;
+  var r = 2 * i + 2;
+
+  if (l < n) {
+    heap_performance.compare++;
+    if (arr[l] > arr[largest_idx]) largest_idx = l;
+  }
+  if (r < n) {
+    heap_performance.compare++;
+    if (arr[r] > arr[largest_idx]) largest_idx = r;
+  }
+
+  if (largest_idx != i) {
+    heap_performance.swap++;
+    swapTest(arr, i, largest_idx);
+  }
+}
+
+function heapSortPerformance() {
+  let arr = [...arrayO],
+    n = arr.length,
+    heap_performance = {
+      compare: 0,
+      swap: 0,
+    };
+
+  for (var i = Math.floor(n / 2 - 1); i >= 0; i--)
+    heapifyTest(arr, n, i, heap_performance);
+
+  for (var i = n - 1; i > 0; i--) {
+    heap_performance.swap++;
+    swapTest(arr, 0, i);
+    heapifyTest(arr, i, 0, heap_performance);
+  }
+
+  algorithm_performance.set("heap_swap", heap_performance.swap);
+  algorithm_performance.set("heap_compare", heap_performance.compare);
 }

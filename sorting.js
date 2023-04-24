@@ -1,39 +1,41 @@
 // ** Variables **
-let array = [];
-let bar_color = "#add8e6";
-let scanBar_color = "#85A1F2";
-let selectBar_color = "#E6A595";
-let selectBar1_color = "#e3b375";
-let doneBar_color = "#99746B";
-let delay = 560; // delay default for sleep func (260ms)
-let max_height_bar = () => {
-  let max = Number.NEGATIVE_INFINITY;
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] > max) max = array[i];
-  }
+let array = [],
+  arrayO = [], // array origin
+  bar_color = "#add8e6",
+  scanBar_color = "#85A1F2",
+  selectBar_color = "#E6A595",
+  selectBar1_color = "#e3b375",
+  doneBar_color = "#99746B",
+  delay = 400,
+  max_height_bar = () => {
+    let max = Number.NEGATIVE_INFINITY;
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] > max) max = array[i];
+    }
 
-  return max;
-};
+    return max;
+  };
 
 // **
 
 // ** Buttons **
-var random_btn = document.getElementsByClassName("random_btn")[0];
-let fileElem = document.getElementById("fileElem"),
+let random_btn = document.getElementsByClassName("random_btn")[0],
+  fileElem = document.getElementById("fileElem"),
   import_btn = document.getElementsByClassName("import_btn")[0],
-  file_noti = document.getElementById("file_noti");
-let create_array_btn = document.getElementById("create_array_btn");
-let remove_array_btn = document.getElementById("remove_array_btn");
-let run_btn = document.getElementsByClassName("run_btn")[0];
+  file_noti = document.getElementById("file_noti"),
+  create_array_btn = document.getElementById("create_array_btn"),
+  remove_array_btn = document.getElementById("remove_array_btn"),
+  run_btn = document.getElementsByClassName("run_btn")[0],
+  compareAlgorithms_btn = document.getElementById("compareAlgorithms_btn");
 // **
 
 // DOM detail code
-let description_box = document.getElementsByClassName("description_box")[0];
-let similar_code_box = document.getElementsByClassName("similar_code_box")[0];
+let description_box = document.getElementsByClassName("description_box")[0],
+  similar_code_box = document.getElementsByClassName("similar_code_box")[0];
 
 // DOM algorithm
-let algorithm_select = document.getElementById("algorithm_select");
-let direction_select = document.getElementById("direction_select");
+let algorithm_select = document.getElementById("algorithm_select"),
+  direction_select = document.getElementById("direction_select");
 
 // DOM bars
 let bars = document.getElementsByClassName("bar");
@@ -63,9 +65,15 @@ function toggleCreateArrayBtns(stt) {
 let input_array = document.getElementById("input_array");
 
 // Event listener to random Array
+let randomIntArrayInRange = (min, max, n = 1) =>
+  Array.from(
+    { length: n },
+    () => Math.floor(Math.random() * (max - min + 1)) + min
+  );
+
 random_btn.addEventListener("click", function () {
-  input_array.value =
-    "13,39,26,22,34,32,47,26,45,30,25,50,79,42,77,84,19,62,47,53";
+  // input_array.value = "13,39,26,22,34";
+  input_array.value = randomIntArrayInRange(10, 90, 40);
 });
 
 //Event import Array
@@ -77,8 +85,8 @@ import_btn.addEventListener("click", function (e) {
 });
 
 function importFile() {
-  const [file] = document.querySelector("#fileElem").files;
-  const reader = new FileReader();
+  const [file] = document.querySelector("#fileElem").files,
+    reader = new FileReader();
 
   reader.addEventListener(
     "load",
@@ -103,6 +111,7 @@ create_array_btn.addEventListener("click", function () {
 
   if (isValid) {
     array = JSON.parse("[" + input_array.value + "]");
+    arrayO = [...array];
     if (array.length > 0) {
       run_btn.removeAttribute("disabled");
       renderBars(array);
@@ -137,13 +146,15 @@ function renderBars(arr) {
 // Event delay sort
 let speed_input = document.getElementById("speed_input");
 speed_input.addEventListener("input", function runVolume(e) {
-  delay = 420 - parseInt(speed_input.value);
+  console.log(speed_input.value);
+  delay = 400 - parseInt(speed_input.value);
 });
 
 // Event Run Sort
 run_btn.addEventListener("click", async function () {
   toggleCreateArrayBtns("unselect");
   document.getElementById("description_text").innerHTML = "";
+  compareAlgorithms_btn.classList.add("none");
   switch (algorithm_select.value) {
     case "selection":
       await selectionSort();
@@ -173,7 +184,6 @@ algorithm_select.addEventListener("click", function (event) {
   event.preventDefault();
 
   if (algorithm_select.value === "heap") {
-    console.log("thoa");
     direction_select.remove(1);
   } else {
     if (direction_select.childElementCount == 1) {
@@ -249,6 +259,81 @@ async function addDescription(text) {
   });
 }
 
+// ham thong tin chi tiet giai thuat
+let algorithmUsed = "";
+function showcompareAlgorithmsBtn(alg) {
+  algorithmUsed = alg;
+  compareAlgorithms_btn.classList.remove("none");
+  var elem = document.getElementsByClassName("description_box")[0];
+  elem.scrollTop = elem.scrollHeight;
+}
+
+let algorithm_performance = new Map([
+  ["selection_swap", 0],
+  ["selection_compare", 0],
+  ["insertion_swap", 0],
+  ["insertion_compare", 0],
+  ["bubble_swap", 0],
+  ["bubble_compare", 0],
+  ["quick_swap", 0],
+  ["quick_compare", 0],
+  ["merge_swap", 0],
+  ["merge_compare", 0],
+  ["heap_swap", 0],
+  ["heap_compare", 0],
+]);
+
+function algorithmPerformance() {
+  selectionSortPerformance();
+  insertionSortPerformance();
+  bubbleSortPerformance();
+  quickSortPerformance();
+  mergeSortPerformance();
+  heapSortPerformance();
+  console.log(algorithm_performance);
+}
+
+compareAlgorithms_btn.addEventListener("click", () => {
+  info.classList.remove("none");
+  let infor_card = document.getElementsByClassName("infor_card")[0];
+  infor_card.innerHTML = "";
+  infor_card.style.height = "70%";
+  // let algorithm = algorithm_select.options[algorithm_select.selectedIndex].text;
+
+  algorithmPerformance();
+
+  let code = document.createRange().createContextualFragment(`
+  <h2>Thông tin giải thuật</h2>
+  <p><i>(xét trong mảng hiện tại)</i></p>
+    <p><strong>&#x2022 Dùng giải thuật:</strong> ${algorithmUsed}</p>
+    <p style='word-wrap:break-word' ><strong>&#x2022 Trước khi sort:</strong> ${arrayO}</p>
+    <p style='word-wrap:break-word'><strong>&#x2022 Sau khi sort:</strong> ${array}</p>
+  </br>
+  <h2>So sánh hiệu suất các giải thuật</h2>
+  <p><i>(số lần thực hiện so sánh - hoán vị)</i></p>
+    <p><strong>&#x2022 Selection Sort:</strong>
+    ${algorithm_performance.get("selection_compare")} - 
+    ${algorithm_performance.get("selection_swap")} </p>
+    <p><strong>&#x2022 Insertion Sort:</strong>
+    ${algorithm_performance.get("insertion_compare")} - 
+    ${algorithm_performance.get("insertion_swap")} </p>
+    <p><strong>&#x2022 Bubble Sort:</strong> 
+    ${algorithm_performance.get("bubble_compare")} - 
+    ${algorithm_performance.get("bubble_swap")} </p>
+    <p><strong>&#x2022 Quick Sort:</strong>
+    ${algorithm_performance.get("quick_compare")} - 
+    ${algorithm_performance.get("quick_swap")} </p>
+    <p><strong>&#x2022 Merge Sort:</strong>
+    ${algorithm_performance.get("merge_compare")} - 
+    ${algorithm_performance.get("merge_swap")} </p>
+    <p><strong>&#x2022 Heap Sort:</strong>
+    ${algorithm_performance.get("heap_compare")} - 
+    ${algorithm_performance.get("heap_swap")} </p>
+</div>`);
+
+  infor_card.appendChild(code);
+});
+
 // ** Cac Function chuc nang**
 // Ham so sanh s1 co lon/nho hon s2 khong
 // neu chieu la tang dan: lon hon
@@ -268,6 +353,17 @@ async function compare(s1, s2) {
       res = true;
       await addDescription("thỏa)");
     } else await addDescription("không thỏa)");
+  }
+  return res;
+}
+
+function compareTest(s1, s2) {
+  var res = false;
+  let direction = direction_select.value;
+  if (direction === "increase") {
+    if (s1 > s2) res = true;
+  } else if (direction === "decrease") {
+    if (s1 < s2) res = true;
   }
   return res;
 }
@@ -296,17 +392,36 @@ async function swap(i1, i2) {
   });
 }
 
+function swapTest(arr, i1, i2) {
+  let temp = arr[i1];
+  arr[i1] = arr[i2];
+  arr[i2] = temp;
+}
+
 // Information control
 let info_btn = document.getElementsByClassName("info_btn")[0];
 let info = document.getElementsByClassName("infor-container")[0];
 let close_btn = document.getElementsByClassName("close")[0];
 
 info_btn.addEventListener("click", () => {
-  console.log("open");
   info.classList.remove("none");
+  let infor_card = document.getElementsByClassName("infor_card")[0];
+  infor_card.innerHTML = "";
+  infor_card.style.height = "30%";
+
+  let code = document.createRange().createContextualFragment(`
+  <p><strong>NIÊN LUẬN CƠ SỞ NGÀNH KTPM:</strong> MÔ PHỎNG GIẢI THUẬT SẮP
+    XẾP</p>
+  <p><strong>SINH VIÊN THỰC HIỆN:</strong> HUỲNH MINH NGHĨA - </p>
+  <p>
+    <strong>GIẢNG VIÊN HƯỚNG DẪN:</strong> THS. TRƯƠNG THỊ THANH TUYỀN -
+    <br /> BỘ MÔN CÔNG NGHỆ PHẦN MỀM
+  </p>
+</div>`);
+
+  infor_card.appendChild(code);
 });
 
 close_btn.addEventListener("click", () => {
-  console.log("close");
   info.classList.add("none");
 });

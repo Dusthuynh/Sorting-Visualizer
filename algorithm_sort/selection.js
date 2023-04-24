@@ -49,6 +49,7 @@ async function selectionSort() {
   await addDescription("DONE SORT!!!");
 
   toggleCreateArrayBtns("select");
+  showcompareAlgorithmsBtn("Selection Sort");
 }
 
 function addSimilarCodeSelectionSort() {
@@ -74,15 +75,24 @@ function addSimilarCodeSelectionSort() {
   similar_code.appendChild(code);
 }
 
-// async function selectionSort() {
-//   let n = array.length;
-//   for (let i = 0; i < n; i++) {
-//     var min_index = i;
-//     for (let j = i + 1; j < n; j++) {
-//       if (await compare(array[min_index], array[j])) {
-//         min_index = j;
-//       }
-//     }
-//     await swap(min_index, i);
-//   }
-// }
+function selectionSortPerformance() {
+  let arr = [...arrayO],
+    n = arr.length,
+    numOfSwap = 0,
+    numOfCompare = 0;
+
+  for (let i = 0; i < n; i++) {
+    var min_index = i;
+    for (let j = i + 1; j < n; j++) {
+      numOfCompare++;
+      if (compareTest(arr[min_index], arr[j])) {
+        min_index = j;
+      }
+    }
+    swapTest(arr, min_index, i);
+    numOfSwap++;
+  }
+
+  algorithm_performance.set("selection_swap", numOfSwap);
+  algorithm_performance.set("selection_compare", numOfCompare);
+}

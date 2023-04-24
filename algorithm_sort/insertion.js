@@ -51,6 +51,7 @@ async function insertionSort() {
   await addDescription("---");
 
   toggleCreateArrayBtns("select");
+  showcompareAlgorithmsBtn("Insertion Sort");
 }
 
 function addSimilarCodeInsertionSort() {
@@ -75,13 +76,25 @@ function addSimilarCodeInsertionSort() {
   similar_code.appendChild(code);
 }
 
-// async function insertionSort() {
-//   let n = array.length;
-//   for (let i = 1; i < n; i++) {
-//     j = i;
-//     while (j > 0 && (await compare(array[j - 1], array[j]))) {
-//       await swap(j, j - 1);
-//       j--;
-//     }
-//   }
-// }
+function insertionSortPerformance() {
+  let arr = [...arrayO],
+    n = arr.length,
+    numOfCompare = 0,
+    numOfSwap = 0;
+
+  for (let i = 1; i < n; i++) {
+    j = i;
+    while (j > 0) {
+      numOfCompare++;
+      if (!compareTest(arr[j - 1], arr[j])) {
+        break;
+      }
+      numOfSwap++;
+      swapTest(arr, j, j - 1);
+      j--;
+    }
+  }
+
+  algorithm_performance.set("insertion_swap", numOfSwap);
+  algorithm_performance.set("insertion_compare", numOfCompare);
+}

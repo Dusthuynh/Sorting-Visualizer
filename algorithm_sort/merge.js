@@ -92,7 +92,7 @@ async function merge(arr, l, m, r) {
       await highLightLineCode(2, "merge2");
       await addDescription(`arr[${k}] = L[${i}] = ${L[i]}`);
 
-      console.log(`bar[${k}] = ${L[i]}`, max_height_bar());
+      // console.log(`bar[${k}] = ${L[i]}`, max_height_bar());
       bars[k].style.height = `${(L[i] / max_height_bar()) * 100}%`;
       bars[k].innerText = L[i];
       i++;
@@ -109,7 +109,7 @@ async function merge(arr, l, m, r) {
       await highLightLineCode(4, "merge2");
       await addDescription(`arr[${k}] = R[${j}] = ${R[j]}`);
 
-      console.log(`bar[${k}] = ${R[j]}`, max_height_bar());
+      // console.log(`bar[${k}] = ${R[j]}`, max_height_bar());
       bars[k].style.height = `${(R[j] / max_height_bar()) * 100}%`;
       bars[k].innerText = R[j];
       j++;
@@ -140,7 +140,7 @@ async function merge(arr, l, m, r) {
     arr[k] = L[i];
     await highLightLineCode(7, "merge2");
     await addDescription(`arr[${k}] = L[${i}] = ${L[i]}`);
-    console.log(`bar[${k}] = ${L[i]}`, max_height_bar());
+    // console.log(`bar[${k}] = ${L[i]}`, max_height_bar());
     bars[k].style.height = `${(L[i] / max_height_bar()) * 100}%`;
     bars[k].innerText = L[i];
     i++;
@@ -167,7 +167,7 @@ async function merge(arr, l, m, r) {
     arr[k] = R[j];
     await highLightLineCode(10, "merge2");
     await addDescription(`arr[${k}] = R[${j}] = ${R[j]}`);
-    console.log(`bar[${k}] = ${R[j]}`, max_height_bar());
+    // console.log(`bar[${k}] = ${R[j]}`, max_height_bar());
     bars[k].style.height = `${(R[j] / max_height_bar()) * 100}%`;
     bars[k].innerText = R[j];
     j++;
@@ -218,6 +218,7 @@ async function preMergeSort() {
   await mergeSort(arr, 0, r);
 
   toggleCreateArrayBtns("select");
+  showcompareAlgorithmsBtn("Merge Sort");
 }
 
 function addSimilarCodeMergeSort() {
@@ -239,7 +240,7 @@ function addSimilarCodeMergeSort() {
     <span>mergeSort(arr,m+1,r)</span>
     <span>merge(arr,l,m,r)</span>
   </div>  
-  <div id="merge1" style="border-left: 2px solid #777777af">
+  <div id="merge1">
   <strong><span>merge(arr,l,m,r)</span></strong>
     <span>n1 = m - l + 1</span>
     <span>n2 = r - m</span>
@@ -269,60 +270,74 @@ function addSimilarCodeMergeSort() {
   similar_code.appendChild(code);
 }
 
-// async function merge(arr, l, m, r) {
-//   var n1 = m - l + 1;
-//   var n2 = r - m;
-//   var L = new Array(n1);
-//   var R = new Array(n2);
+// Test performance
 
-//   for (var i = 0; i < n1; i++) {
-//     L[i] = arr[l + i];
-//   }
+function mergeTest(arr, l, m, r, merge_performance) {
+  var n1 = m - l + 1;
+  var n2 = r - m;
+  var L = new Array(n1);
+  var R = new Array(n2);
 
-//   for (var j = 0; j < n2; j++) {
-//     R[j] = arr[m + 1 + j];
-//   }
+  for (var i = 0; i < n1; i++) {
+    L[i] = arr[l + i];
+  }
 
-//   var i = 0,
-//     j = 0,
-//     k = l;
+  for (var j = 0; j < n2; j++) {
+    R[j] = arr[m + 1 + j];
+  }
 
-//   while (i < n1 && j < n2) {
-//     if (compare(R[j], L[i])) {
-//       arr[k] = L[i];
-//       i++;
-//     } else {
-//       arr[k] = R[j];
-//       j++;
-//     }
-//     k++;
-//   }
+  var i = 0,
+    j = 0,
+    k = l;
 
-//   while (i < n1) {
-//     arr[k] = L[i];
-//     i++;
-//     k++;
-//   }
+  while (i < n1 && j < n2) {
+    merge_performance.compare++;
+    if (compareTest(R[j], L[i])) {
+      arr[k] = L[i];
+      i++;
+    } else {
+      arr[k] = R[j];
+      j++;
+    }
+    k++;
+  }
 
-//   while (j < n2) {
-//     arr[k] = R[j];
-//     j++;
-//     k++;
-//   }
-// }
+  while (i < n1) {
+    merge_performance.swap++;
+    arr[k] = L[i];
+    i++;
+    k++;
+  }
 
-// async function mergeSort(arr, l, r) {
-//   if (l >= r) {
-//     return;
-//   }
-//   var m = l + parseInt((r - l) / 2);
+  while (j < n2) {
+    merge_performance.swap++;
+    arr[k] = R[j];
+    j++;
+    k++;
+  }
+}
 
-//   await mergeSort(arr, l, m);
-//   await mergeSort(arr, m + 1, r);
-//   await merge(arr, l, m, r);
-// }
+function mergeSortTest(arr, l, r, merge_performance) {
+  if (l >= r) {
+    return;
+  }
+  var m = l + parseInt((r - l) / 2);
 
-// async function preMergeSort() {
-//   let r = array.length - 1;
-//   await mergeSort(array, 0, r);
-// }
+  mergeSortTest(arr, l, m, merge_performance);
+  mergeSortTest(arr, m + 1, r, merge_performance);
+  mergeTest(arr, l, m, r, merge_performance);
+}
+
+function mergeSortPerformance() {
+  let arr = [...arrayO],
+    r = arr.length - 1,
+    merge_performance = {
+      compare: 0,
+      swap: 0,
+    };
+
+  mergeSortTest(arr, 0, r, merge_performance);
+
+  algorithm_performance.set("merge_swap", merge_performance.swap);
+  algorithm_performance.set("merge_compare", merge_performance.compare);
+}

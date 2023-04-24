@@ -103,7 +103,7 @@ header {
   padding-bottom: 5px;
 }
 
-.visually-hidden{
+.visually-hidden {
   position: absolute !important;
   height: 1px;
   width: 1px;
@@ -203,7 +203,7 @@ header {
 }
 
 #bars_container {
-  height: calc(60vh - var(--height-header));
+  height: calc(59vh - var(--height-header));
   width: calc(100vw - var(--width-control-bar));
   padding-top: 10px;
   display: flex;
@@ -230,7 +230,7 @@ header {
 }
 
 .detail_container {
-  height: 40vh;
+  height: 41vh;
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -257,6 +257,7 @@ header {
   user-select: text;
 }
 
+
 .similar_code_box {
   background-color: #1ab594;
   width: 60%;
@@ -270,6 +271,14 @@ code {
 
 .hl-code {
   background-color: #777;
+}
+
+#compareAlgorithms_btn {
+  color: #2b3c4d;
+  font-weight: bold;
+  margin-top: 10px;
+  padding: 5px;
+  height: 30px;
 }
 
 /* information */
@@ -287,7 +296,6 @@ code {
 
 .infor_card {
   width: 40%;
-  height: 20%;
   padding: 30px;
   background-color: aliceblue;
   border-radius: 10px;
