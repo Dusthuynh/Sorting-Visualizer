@@ -184,6 +184,7 @@ header {
 .command_container {
   display: flex;
   justify-content: space-around;
+  margin-top: 5px;
 }
 .command_container .btn {
   width: 100px;
@@ -257,7 +258,6 @@ header {
   user-select: text;
 }
 
-
 .similar_code_box {
   background-color: #1ab594;
   width: 60%;
@@ -295,9 +295,10 @@ code {
 }
 
 .infor_card {
+  color: #2b3c4d;
+  background-color: #f0ecf7;
   width: 40%;
   padding: 30px;
-  background-color: aliceblue;
   border-radius: 10px;
 }
 
