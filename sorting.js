@@ -111,6 +111,7 @@ create_array_btn.addEventListener("click", function () {
 
   if (isValid) {
     array = JSON.parse("[" + input_array.value + "]");
+
     arrayO = [...array];
     if (array.length > 0) {
       run_btn.removeAttribute("disabled");
