@@ -73,7 +73,7 @@ let randomIntArrayInRange = (min, max, n = 1) =>
 
 random_btn.addEventListener("click", function () {
   // input_array.value = "13,39,26,22,34";
-  input_array.value = randomIntArrayInRange(10, 90, 18);
+  input_array.value = randomIntArrayInRange(10, 90, 20);
 });
 
 //Event import Array
@@ -105,19 +105,32 @@ function importFile() {
 }
 
 // Event listener to create Array
+// ham kiem tra so co nam trong khoang
+function checkNumInRange(ele, index, array) {
+  return ele > 0 && ele <= 100;
+}
+
 create_array_btn.addEventListener("click", function () {
-  var isValid =
-    /^[0-9,]*$/.test(input_array.value) && !isNaN(input_array.value.slice(-1));
+  try {
+    let isValid =
+      /^[0-9,]*$/.test(input_array.value) &&
+      !isNaN(input_array.value.slice(-1));
+    if (!isValid)
+      throw "Vui lòng nhập đúng định dạng: dãy chỉ gồm số và dấu phẩy, không thừa dấu phẩy";
 
-  if (isValid) {
     array = JSON.parse("[" + input_array.value + "]");
+    console.log(array.length);
 
-    arrayO = [...array];
-    if (array.length > 0) {
-      run_btn.removeAttribute("disabled");
-      renderBars(array);
-    }
-  } else alert("Vui lòng nhập đúng định dạng: dãy chỉ gồm số và dấu phẩy, không thừa dấu phẩy");
+    if (array.length < 2 || array.length > 40)
+      throw `Dãy số nhập vào có số lượng không không thỏa điều kiện 2 ≤ n ≤ 40 (Hiện tại đang là ${array.length})`;
+    if (!array.every(checkNumInRange))
+      throw "Dãy số nhập vào tồn tại số không thỏa điều kiện 1 ≤ x ≤ 100";
+
+    run_btn.removeAttribute("disabled");
+    renderBars(array);
+  } catch (err) {
+    alert(err);
+  }
 });
 
 // Event listener to remove array
