@@ -118,7 +118,20 @@ header {
   border-radius: 5px;
   -webkit-user-select: none;
   user-select: none;
+}
+.random_btn{
+  margin-right: 10px;
+}
+
+.input_random_range {
+  -moz-appearance: textfield;
+  appearance: textfield;
+
+  border-radius: 5px;
   margin-right: 5px;
+  width: 50px;
+  height: 27px;
+  padding: 0 10px;
 }
 
 .create_array .input textarea {

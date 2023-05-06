@@ -25,6 +25,7 @@ let random_btn = document.getElementsByClassName("random_btn")[0],
   file_noti = document.getElementById("file_noti"),
   create_array_btn = document.getElementById("create_array_btn"),
   remove_array_btn = document.getElementById("remove_array_btn"),
+  speed_input = document.getElementById("speed_input"),
   run_btn = document.getElementsByClassName("run_btn")[0],
   compareAlgorithms_btn = document.getElementById("compareAlgorithms_btn");
 // **
@@ -65,6 +66,10 @@ function toggleCreateArrayBtns(stt) {
 let input_array = document.getElementById("input_array");
 
 // Event listener to random Array
+function randomInRange(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 let randomIntArrayInRange = (min, max, n = 1) =>
   Array.from(
     { length: n },
@@ -73,7 +78,12 @@ let randomIntArrayInRange = (min, max, n = 1) =>
 
 random_btn.addEventListener("click", function () {
   // input_array.value = "13,39,26,22,34";
-  input_array.value = randomIntArrayInRange(10, 90, 20);
+
+  let input_random_range = document.getElementsByClassName("input_random_range")[0];
+  let range = input_random_range.value;
+  input_array.value = randomIntArrayInRange(10, 90, range);
+
+  // input_array.value = randomIntArrayInRange(10, 90, randomInRange(2, 40));
 });
 
 //Event import Array
@@ -119,13 +129,15 @@ create_array_btn.addEventListener("click", function () {
       throw "Vui lòng nhập đúng định dạng: dãy chỉ gồm số và dấu phẩy, không thừa dấu phẩy";
 
     array = JSON.parse("[" + input_array.value + "]");
-    console.log(array.length);
+    // console.log(array.length);
 
     if (array.length < 2 || array.length > 40)
       throw `Dãy số nhập vào có số lượng không không thỏa điều kiện 2 ≤ n ≤ 40 (Hiện tại đang là ${array.length})`;
     if (!array.every(checkNumInRange))
       throw "Dãy số nhập vào tồn tại số không thỏa điều kiện 1 ≤ x ≤ 100";
 
+    speed_input.value = 60;
+    arrayO = [...array];
     run_btn.removeAttribute("disabled");
     renderBars(array);
   } catch (err) {
@@ -158,9 +170,8 @@ function renderBars(arr) {
 }
 
 // Event delay sort
-let speed_input = document.getElementById("speed_input");
 speed_input.addEventListener("input", function runVolume(e) {
-  console.log(speed_input.value);
+  // console.log(speed_input.value);
   delay = 400 - parseInt(speed_input.value);
 });
 
@@ -304,7 +315,7 @@ function algorithmPerformance() {
   quickSortPerformance();
   mergeSortPerformance();
   heapSortPerformance();
-  console.log(algorithm_performance);
+  // console.log(algorithm_performance);
 }
 
 compareAlgorithms_btn.addEventListener("click", () => {
@@ -424,12 +435,13 @@ info_btn.addEventListener("click", () => {
   infor_card.style.height = "30%";
 
   let code = document.createRange().createContextualFragment(`
-  <p><strong>NIÊN LUẬN CƠ SỞ NGÀNH KTPM:</strong> MÔ PHỎNG GIẢI THUẬT SẮP
-    XẾP</p>
-  <p><strong>SINH VIÊN THỰC HIỆN:</strong> HUỲNH MINH NGHĨA - </p>
+  <h2>NIÊN LUẬN CƠ SỞ NGÀNH KTPM:</br> MÔ PHỎNG GIẢI THUẬT SẮP
+    XẾP</h2>
+    </br>
+  <p><strong>SINH VIÊN THỰC HIỆN:</strong> HUỲNH MINH NGHĨA - B2012232</p>
   <p>
-    <strong>GIẢNG VIÊN HƯỚNG DẪN:</strong> THS. TRƯƠNG THỊ THANH TUYỀN -
-    <br /> BỘ MÔN CÔNG NGHỆ PHẦN MỀM
+    <strong>GIẢNG VIÊN HƯỚNG DẪN:</strong> THS. TRƯƠNG THỊ THANH TUYỀN
+    <br />BỘ MÔN CÔNG NGHỆ PHẦN MỀM
   </p>
 </div>`);
 
